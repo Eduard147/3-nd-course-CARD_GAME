@@ -32,8 +32,8 @@
     &__suits {
         padding: 48px;
         display: grid;
-        grid-template-columns: repeat(12, auto);
+        grid-template-columns: repeat(6, auto);
         justify-content: center;
         gap: 15px;
-    }   
+    }
 }

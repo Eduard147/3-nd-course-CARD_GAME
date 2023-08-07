@@ -1,17 +1,23 @@
+import { shuffle } from "lodash";
 import { cardsSuitsArr } from "./array_cards_suits.js";
 
-export function renderLevelGame(level, appEl) {
+export function renderLevelGame(level, appEl, renderGameDifficulty) {
     let levelGame = level.value;
     const cardsFlipSide = [];
-    //let clickCards = false;
 
-    function getCardsFlipSideArr(levelGame) {
+    const cardsSuitsArraySort = shuffle(cardsSuitsArr).slice(0, levelGame / 2);
+
+    const duplicateCardsArr = cardsSuitsArraySort.concat(cardsSuitsArraySort);
+    const duplicateCardsArrSort = shuffle(duplicateCardsArr);
+    // const comparisonArrCards = duplicateCardsArrSort;
+
+    function getCardsFlipSideArr() {
         for (let i = 0; i < levelGame; i++) {
             cardsFlipSide.push(
-                `<img id="cards-click" class="game-cards__flip-side" src="./img/рубашка.png">`,
+                `<img id="cards-click" data-index="${i}" class="game-cards__flip-side" src="../static/img/рубашка.png">`,
             );
         }
-        return;
+        return cardsFlipSide;
     }
 
     getCardsFlipSideArr(levelGame);
@@ -28,39 +34,81 @@ export function renderLevelGame(level, appEl) {
          </div>
          <button class="box-game__button" id="submit-button" type="submit">Начать заново</button>
      </header>
-     <div class="game-cards__suits center" id="suits">${cardsFlipSide}</div>
+     <div class="game-cards__suits center" id="suits">${duplicateCardsArrSort.join(
+         "",
+     )}</div>
     </div> `;
     appEl.innerHTML = appHTML;
 
-    const reverseSlideCards = document.querySelectorAll(
-        ".game-cards__flip-side",
-    );
+    let clickCards = true;
+    let firstIndexCard = null;
+    let secondIndexCard = null;
+    // function setfirstIndexCard(newIndex) {
+    //     let firstIndexCard = newIndex;
+    //     return firstIndexCard;
+    // }
 
-    for (const reverseSlideCard of reverseSlideCards) {
-        reverseSlideCard.addEventListener("click", () => {
-            const cardsSuitsArraySort = cardsSuitsArr.sort(
-                () => Math.random() - 0.5,
+
+
+
+    
+
+    function flipsСards() {
+
+            document.getElementById("suits").innerHTML = `${cardsFlipSide.join(
+                "",
+            )}`;
+
+            const reverseSlideCards = document.querySelectorAll(
+                ".game-cards__flip-side",
             );
-            //    const duplicateCardsArr =  (([].concat(cardsSuitsArraySort, cardsSuitsArraySort)).sort()).slice(0, level.value);
-            //    console.log(duplicateCardsArr);
-            const duplicateCardsArr = cardsSuitsArraySort
-                .reduce(
-                    (newArr, currentValue) =>
-                        newArr.concat([currentValue, currentValue]),
-                    [],
-                )
-                .slice(0, level.value);
-            const duplicateCardsArrSort = duplicateCardsArr.sort(
-                () => Math.random() - 0.5,
-            );
+          
+            for (const reverseSlideCard of reverseSlideCards) {
+                reverseSlideCard.addEventListener("click", () => {
+                    let cardsIndex = reverseSlideCard.dataset.index;
 
-            document.getElementById(
-                "suits",
-            ).innerHTML = `${duplicateCardsArrSort}`;
+                    if (clickCards) {
+                        console.log(clickCards);
+                        cardsFlipSide[cardsIndex] =
+                            duplicateCardsArrSort[cardsIndex];
+                        firstIndexCard = cardsIndex;
 
-            setTimeout(() => {
-                renderLevelGame(level, appEl);
-            }, 5000);
-        });
+                        console.log(firstIndexCard);
+                        document.getElementById(
+                            "suits",
+                        ).innerHTML = `${cardsFlipSide.join("")}`;
+
+                        flipsСards();
+                    } else {
+                        cardsFlipSide[cardsIndex] =
+                            duplicateCardsArrSort[cardsIndex];
+
+                        secondIndexCard = cardsIndex;
+                        console.log(secondIndexCard);
+                        document.getElementById(
+                            "suits",
+                        ).innerHTML = `${cardsFlipSide.join("")}`;
+
+                        comparingTwoCard(firstIndexCard, secondIndexCard,  flipsСards);                     
+
+                        console.log(clickCards);
+                    }
+                    clickCards = !clickCards;
+                });
+            }
+          }
+
+
+    setTimeout(flipsСards, 5000)
+   
+
+    function comparingTwoCard(firstIndexCard, secondIndexCard) {
+        if (cardsFlipSide[firstIndexCard] === cardsFlipSide[secondIndexCard]) {
+            flipsСards ();
+            alert('Выиграл');
+        } else {
+            alert("проиграл");
+            renderGameDifficulty(renderLevelGame);
+        }
     }
 }
