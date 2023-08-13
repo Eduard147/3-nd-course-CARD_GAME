@@ -1,44 +1,60 @@
 {
-    "name": "3-nd-course-card_game",
-    "version": "1.0.0",
-    "description": "Карточная игра. Смысл игры: нужно выбрать все пары карт.",
-    "main": "index.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "dev": "webpack --mode development --watch",
-        "start": "http-server -p 3004",
-        "format": "prettier --write ./",
-        "lint:js": "eslint ./**/*.js",
-        "lint:scss": "stylelint ./style/**/*.scss",
-        "prepare": "husky install",
-        "lint": "npm run lint:js && npm run lint:scss"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/Eduard147/3-nd-course-CARD_GAME.git"
-    },
-    "author": "",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/Eduard147/3-nd-course-CARD_GAME/issues"
-    },
-    "homepage": "https://github.com/Eduard147/3-nd-course-CARD_GAME#readme",
-    "dependencies": {
-        "http-server": "^14.1.1",
-        "lodash": "^4.17.21",
-        "postcss-scss": "^4.0.6"
-    },
-    "devDependencies": {
-        "axios": "^1.4.0",
-        "eslint": "^8.46.0",
-        "eslint-config-prettier": "^8.9.0",
-        "eslint-plugin-prettier": "^5.0.0",
-        "husky": "^8.0.3",
-        "prettier": "^3.0.0",
-        "stylelint": "^15.10.2",
-        "stylelint-config-standard": "^34.0.0",
-        "stylelint-prettier": "^4.0.2",
-        "webpack": "^5.88.2",
-        "webpack-cli": "^5.1.4"
-    }
+  "name": "3-nd-course-card_game",
+  "version": "1.0.0",
+  "description": "Карточная игра. Смысл игры: нужно выбрать все пары карт.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack --mode development --watch",
+    "build": "SET NODE_ENV='production' && webpack",
+    "start": "webpack-dev-server --open",
+    "format": "prettier --write ./",
+    "lint:js": "eslint ./**/*.js",
+    "lint:scss": "stylelint ./style/**/*.scss",
+    "prepare": "husky install",
+    "lint": "npm run lint:js && npm run lint:scss && npm run lint:ts",
+    "lint:ts": "tsc --noEmit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Eduard147/3-nd-course-CARD_GAME.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Eduard147/3-nd-course-CARD_GAME/issues"
+  },
+  "homepage": "https://github.com/Eduard147/3-nd-course-CARD_GAME#readme",
+  "dependencies": {
+    "http-server": "^14.1.1",
+    "lodash": "^4.17.21",
+    "postcss-scss": "^4.0.6"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.197",
+    "@typescript-eslint/eslint-plugin": "^6.3.0",
+    "@typescript-eslint/parser": "^6.3.0",
+    "axios": "^1.4.0",
+    "copy-webpack-plugin": "^11.0.0",
+    "css-loader": "^6.8.1",
+    "css-minimizer-webpack-plugin": "^5.0.1",
+    "eslint": "^8.46.0",
+    "eslint-config-prettier": "^8.9.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "html-webpack-plugin": "^5.5.3",
+    "husky": "^8.0.3",
+    "mini-css-extract-plugin": "^2.7.6",
+    "prettier": "^3.0.0",
+    "sass": "^1.64.2",
+    "sass-loader": "^13.3.2",
+    "stylelint": "^15.10.2",
+    "stylelint-config-standard": "^34.0.0",
+    "stylelint-prettier": "^4.0.2",
+    "ts-loader": "^9.4.4",
+    "typescript": "^5.1.6",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
+  },
+  "types": "./index.d.ts"
 }
