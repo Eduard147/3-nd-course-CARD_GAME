@@ -1,6 +1,8 @@
-export function renderGameDifficulty(renderLevelGame) {
-    let appEl = document.getElementById("app");
-   
+import { renderLevelGame } from "./render_level_game";
+
+export function renderGameDifficulty() {
+    const appEl: HTMLElement | null = document.getElementById("app");
+
     const appHTML = `
     <div class="top center">
     <form id="form-level" class="box-game" method="POST" action="#">
@@ -22,20 +24,27 @@ export function renderGameDifficulty(renderLevelGame) {
     </form>
 </div>`;
 
-    appEl.innerHTML = appHTML;
+    if (appEl) {
+        appEl.innerHTML = appHTML;
 
-    document.getElementById("form-level").addEventListener("submit", (e) => {
-        e.preventDefault();
-        console.log(e);
+        const formLevel: Element | null = document.getElementById("form-level");
 
-        let levels = document.querySelectorAll(".box-difficulty-level__radio");
+        if (formLevel) {
+            formLevel.addEventListener("submit", (e) => {
+                e.preventDefault();
+                console.log(e);
 
-        for (const level of levels) {
-            if (level.checked) {
-                console.log(level.value);
+                const levels = document.querySelectorAll(
+                    ".box-difficulty-level__radio",
+                );
 
-                renderLevelGame(level, appEl, renderGameDifficulty);
-            }
+                for (const level of levels) {
+                    if (level instanceof HTMLInputElement && level.checked) {
+                        const levelGame = Number(level.value);
+                        renderLevelGame(levelGame, appEl);
+                    }
+                }
+            });
         }
-    });
+    }
 }
